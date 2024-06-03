@@ -11,12 +11,12 @@ import pygame as pg
 import sys
 import json
 from time import sleep
-# import pprint
+import copy
 
 # Levels
 with open("levels.json", "r") as f:
     levels = json.load(f)
-    init_lvls = levels.copy()
+    init_lvls = copy.deepcopy(levels)
     number_of_levels = len(levels)
 
 # Init
@@ -24,7 +24,7 @@ pg.init()
 clock = pg.time.Clock()
 
 # Icon
-icon = pg.image.load("pic/wall.png")
+icon = pg.image.load("pic/box.png")
 
 # Screen
 scr = pg.display.set_mode((8*64, 8*64))
@@ -32,7 +32,8 @@ pg.display.set_caption("Sokoban Pushbox")
 pg.display.set_icon(icon)
 
 # Images
-wall_sprite = pg.transform.scale(icon.convert(), (64, 64))
+w = pg.image.load("pic/wall.png").convert()
+wall_sprite = pg.transform.scale(w, (64, 64))
 p = pg.image.load("pic/player.png").convert()
 player_sprite = pg.transform.scale(p, (64, 64))
 b = pg.image.load("pic/box.png").convert()
@@ -46,6 +47,7 @@ void_sprite = pg.transform.scale(v, (64, 64))
 
 lvl_complete_font = pg.font.Font("fonts/Inter/static/Inter-Black.ttf", 40)
 lvl_complete_text = lvl_complete_font.render("Level Completed!", False, "White")
+finish_font = pg.font.Font("fonts/Inter/static/Inter-ExtraBold.ttf", 80)
 
 # Level
 side = len(levels[0])
@@ -59,7 +61,6 @@ for x in range(8):
     for y in range(8):
         if levels[0][x][y] == "P":
             pos = [x, y]
-
 
 while True:
     if not finished:
@@ -79,6 +80,9 @@ while True:
                     scr.blit(box_on_target_sprite, (x*64, y*64))
                 elif levels[current_level][y][x] == ".":
                     scr.blit(void_sprite, (x*64, y*64))
+
+                lvl_text = lvl_complete_font.render(str(current_level+1), True, "White")
+                scr.blit(lvl_text, (10, 10))
         if not boxes_on_map:
             big_void = pg.transform.scale(void_sprite, (side*64, side*64))
             scr.blit(big_void, (0, 0))
@@ -87,7 +91,6 @@ while True:
             sleep(1)
             current_level += 1
             if current_level == number_of_levels:
-                print("finished")
                 finished = True
             else:
                 side = len(levels[current_level])
@@ -96,6 +99,12 @@ while True:
                         if levels[current_level][x][y] == "P":
                             pos = [y, x]
                 pg.display.set_mode((side*64, side*64))
+    else:
+        big_void = pg.transform.scale(void_sprite, (side*64, side*64))
+        scr.blit(big_void, (0, 0))
+        finished_text = finish_font.render("You won!", True, "Green")
+        scr.blit(finished_text, (10, 10))
+
     for ev in pg.event.get():
         if ev.type == pg.QUIT:
             pg.quit()
@@ -294,6 +303,12 @@ while True:
                                 levels[current_level][pos[1]][pos[0]] = "T"
                             pos = [pos[0] - 1, pos[1]]
                             levels[current_level][pos[1]][pos[0] - 1] = "X"
+                if ev.key == pg.K_r:
+                    levels[current_level] = copy.deepcopy(init_lvls[current_level])
+                    for x in range(side):
+                        for y in range(side):
+                            if levels[current_level][x][y] == "P":
+                                pos = [y, x]
 
     pg.display.flip()
     clock.tick(50)
