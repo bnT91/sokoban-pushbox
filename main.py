@@ -57,9 +57,9 @@ finished = False
 # Player
 pos = []
 
-for x in range(8):
-    for y in range(8):
-        if levels[0][x][y] == "P":
+for x in range(side):
+    for y in range(side):
+        if levels[current_level][x][y] in ["P", "o"]:
             pos = [x, y]
 
 while True:
@@ -96,7 +96,7 @@ while True:
                 side = len(levels[current_level])
                 for x in range(side):
                     for y in range(side):
-                        if levels[current_level][x][y] == "P":
+                        if levels[current_level][x][y] in ["P", "o"]:
                             pos = [y, x]
                 pg.display.set_mode((side*64, side*64))
     else:
@@ -110,205 +110,208 @@ while True:
             pg.quit()
             sys.exit()
         if ev.type == pg.KEYUP:
-            if not finished:
-                if ev.key == pg.K_UP:
-                    if pos[1] != 0:
-                        if levels[current_level][pos[1] - 1][pos[0]] == ".":
-                            levels[current_level][pos[1] - 1][pos[0]] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] - 1]
-                        elif levels[current_level][pos[1] - 1][pos[0]] == "T":
-                            levels[current_level][pos[1] - 1][pos[0]] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] - 1]
-                        elif levels[current_level][pos[1] - 1][pos[0]] == "B" and levels[current_level][pos[1] - 2][pos[0]] == ".":
-                            levels[current_level][pos[1] - 1][pos[0]] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] - 1]
-                            levels[current_level][pos[1] - 1][pos[0]] = "B"
-                        elif levels[current_level][pos[1] - 1][pos[0]] == "B" and levels[current_level][pos[1] - 2][pos[0]] == "T":
-                            levels[current_level][pos[1] - 1][pos[0]] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] - 1]
-                            levels[current_level][pos[1] - 1][pos[0]] = "X"
-                        elif levels[current_level][pos[1] - 1][pos[0]] == "X" and levels[current_level][pos[1] - 2][pos[0]] == ".":
-                            levels[current_level][pos[1] - 1][pos[0]] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] - 1]
-                            levels[current_level][pos[1] - 1][pos[0]] = "B"
-                        elif levels[current_level][pos[1] - 1][pos[0]] == "X" and levels[current_level][pos[1] - 2][pos[0]] == "T":
-                            levels[current_level][pos[1] - 1][pos[0]] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] - 1]
-                            levels[current_level][pos[1] - 1][pos[0]] = "X"
-                if ev.key == pg.K_DOWN:
-                    if pos[1] != side-1:
-                        if levels[current_level][pos[1] + 1][pos[0]] == ".":
-                            levels[current_level][pos[1] + 1][pos[0]] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] + 1]
-                        elif levels[current_level][pos[1] + 1][pos[0]] == "T":
-                            levels[current_level][pos[1] + 1][pos[0]] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] + 1]
-                        elif levels[current_level][pos[1] + 1][pos[0]] == "B" and levels[current_level][pos[1] + 2][pos[0]] == ".":
-                            levels[current_level][pos[1] + 1][pos[0]] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] + 1]
-                            levels[current_level][pos[1] + 1][pos[0]] = "B"
-                        elif levels[current_level][pos[1] + 1][pos[0]] == "B" and levels[current_level][pos[1] + 2][pos[0]] == "T":
-                            levels[current_level][pos[1] + 1][pos[0]] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] + 1]
-                            levels[current_level][pos[1] + 1][pos[0]] = "X"
-                        elif levels[current_level][pos[1] + 1][pos[0]] == "X" and levels[current_level][pos[1] + 2][pos[0]] == ".":
-                            levels[current_level][pos[1] + 1][pos[0]] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] + 1]
-                            levels[current_level][pos[1] + 1][pos[0]] = "B"
-                        elif levels[current_level][pos[1] + 1][pos[0]] == "X" and levels[current_level][pos[1] + 2][pos[0]] == "T":
-                            levels[current_level][pos[1] + 1][pos[0]] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0], pos[1] + 1]
-                            levels[current_level][pos[1] + 1][pos[0]] = "X"
-                if ev.key == pg.K_RIGHT:
-                    if pos[0] != side-1:
-                        if levels[current_level][pos[1]][pos[0] + 1] == ".":
-                            levels[current_level][pos[1]][pos[0] + 1] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] + 1, pos[1]]
-                        elif levels[current_level][pos[1]][pos[0] + 1] == "T":
-                            levels[current_level][pos[1]][pos[0] + 1] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] + 1, pos[1]]
-                        elif levels[current_level][pos[1]][pos[0] + 1] == "B" and levels[current_level][pos[1]][pos[0] + 2] == ".":
-                            levels[current_level][pos[1]][pos[0] + 1] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] + 1, pos[1]]
-                            levels[current_level][pos[1]][pos[0] + 1] = "B"
-                        elif levels[current_level][pos[1]][pos[0] + 1] == "B" and levels[current_level][pos[1]][pos[0] + 2] == "T":
-                            levels[current_level][pos[1]][pos[0] + 1] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] + 1, pos[1]]
-                            levels[current_level][pos[1]][pos[0] + 1] = "X"
-                        elif levels[current_level][pos[1]][pos[0] + 1] == "X" and levels[current_level][pos[1]][pos[0] + 2] == ".":
-                            levels[current_level][pos[1]][pos[0] + 1] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] + 1, pos[1]]
-                            levels[current_level][pos[1]][pos[0] + 1] = "B"
-                        elif levels[current_level][pos[1]][pos[0] + 1] == "X" and levels[current_level][pos[1]][pos[0] + 2] == "T":
-                            levels[current_level][pos[1]][pos[0] + 1] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] + 1, pos[1]]
-                            levels[current_level][pos[1]][pos[0] + 1] = "X"
-                if ev.key == pg.K_LEFT:
-                    if pos[0] != 0:
-                        if levels[current_level][pos[1]][pos[0] - 1] == ".":
-                            levels[current_level][pos[1]][pos[0] - 1] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] - 1, pos[1]]
-                        elif levels[current_level][pos[1]][pos[0] - 1] == "T":
-                            levels[current_level][pos[1]][pos[0] - 1] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] - 1, pos[1]]
-                        elif levels[current_level][pos[1]][pos[0] - 1] == "B" and levels[current_level][pos[1]][pos[0] - 2] == ".":
-                            levels[current_level][pos[1]][pos[0] - 1] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] - 1, pos[1]]
-                            levels[current_level][pos[1]][pos[0] - 1] = "B"
-                        elif levels[current_level][pos[1]][pos[0] - 1] == "B" and levels[current_level][pos[1]][pos[0] - 2] == "T":
-                            levels[current_level][pos[1]][pos[0] - 1] = "P"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] - 1, pos[1]]
-                            levels[current_level][pos[1]][pos[0] - 1] = "X"
-                        elif levels[current_level][pos[1]][pos[0] - 1] == "X" and levels[current_level][pos[1]][pos[0] - 2] == ".":
-                            levels[current_level][pos[1]][pos[0] - 1] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] - 1, pos[1]]
-                            levels[current_level][pos[1]][pos[0] - 1] = "B"
-                        elif levels[current_level][pos[1]][pos[0] - 1] == "X" and levels[current_level][pos[1]][pos[0] - 2] == "T":
-                            levels[current_level][pos[1]][pos[0] - 1] = "o"
-                            if levels[current_level][pos[1]][pos[0]] == "P":
-                                levels[current_level][pos[1]][pos[0]] = "."
-                            else:
-                                levels[current_level][pos[1]][pos[0]] = "T"
-                            pos = [pos[0] - 1, pos[1]]
-                            levels[current_level][pos[1]][pos[0] - 1] = "X"
-                if ev.key == pg.K_r:
-                    levels[current_level] = copy.deepcopy(init_lvls[current_level])
-                    for x in range(side):
-                        for y in range(side):
-                            if levels[current_level][x][y] == "P":
-                                pos = [y, x]
+            try:
+                if not finished:
+                    if ev.key == pg.K_UP:
+                        if pos[1] != 0:
+                            if levels[current_level][pos[1] - 1][pos[0]] == ".":
+                                levels[current_level][pos[1] - 1][pos[0]] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] - 1]
+                            elif levels[current_level][pos[1] - 1][pos[0]] == "T":
+                                levels[current_level][pos[1] - 1][pos[0]] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] - 1]
+                            elif levels[current_level][pos[1] - 1][pos[0]] == "B" and levels[current_level][pos[1] - 2][pos[0]] == ".":
+                                levels[current_level][pos[1] - 1][pos[0]] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] - 1]
+                                levels[current_level][pos[1] - 1][pos[0]] = "B"
+                            elif levels[current_level][pos[1] - 1][pos[0]] == "B" and levels[current_level][pos[1] - 2][pos[0]] == "T":
+                                levels[current_level][pos[1] - 1][pos[0]] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] - 1]
+                                levels[current_level][pos[1] - 1][pos[0]] = "X"
+                            elif levels[current_level][pos[1] - 1][pos[0]] == "X" and levels[current_level][pos[1] - 2][pos[0]] == ".":
+                                levels[current_level][pos[1] - 1][pos[0]] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] - 1]
+                                levels[current_level][pos[1] - 1][pos[0]] = "B"
+                            elif levels[current_level][pos[1] - 1][pos[0]] == "X" and levels[current_level][pos[1] - 2][pos[0]] == "T":
+                                levels[current_level][pos[1] - 1][pos[0]] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] - 1]
+                                levels[current_level][pos[1] - 1][pos[0]] = "X"
+                    if ev.key == pg.K_DOWN:
+                        if pos[1] != side-1:
+                            if levels[current_level][pos[1] + 1][pos[0]] == ".":
+                                levels[current_level][pos[1] + 1][pos[0]] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] + 1]
+                            elif levels[current_level][pos[1] + 1][pos[0]] == "T":
+                                levels[current_level][pos[1] + 1][pos[0]] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] + 1]
+                            elif levels[current_level][pos[1] + 1][pos[0]] == "B" and levels[current_level][pos[1] + 2][pos[0]] == ".":
+                                levels[current_level][pos[1] + 1][pos[0]] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] + 1]
+                                levels[current_level][pos[1] + 1][pos[0]] = "B"
+                            elif levels[current_level][pos[1] + 1][pos[0]] == "B" and levels[current_level][pos[1] + 2][pos[0]] == "T":
+                                levels[current_level][pos[1] + 1][pos[0]] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] + 1]
+                                levels[current_level][pos[1] + 1][pos[0]] = "X"
+                            elif levels[current_level][pos[1] + 1][pos[0]] == "X" and levels[current_level][pos[1] + 2][pos[0]] == ".":
+                                levels[current_level][pos[1] + 1][pos[0]] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] + 1]
+                                levels[current_level][pos[1] + 1][pos[0]] = "B"
+                            elif levels[current_level][pos[1] + 1][pos[0]] == "X" and levels[current_level][pos[1] + 2][pos[0]] == "T":
+                                levels[current_level][pos[1] + 1][pos[0]] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0], pos[1] + 1]
+                                levels[current_level][pos[1] + 1][pos[0]] = "X"
+                    if ev.key == pg.K_RIGHT:
+                        if pos[0] != side-1:
+                            if levels[current_level][pos[1]][pos[0] + 1] == ".":
+                                levels[current_level][pos[1]][pos[0] + 1] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] + 1, pos[1]]
+                            elif levels[current_level][pos[1]][pos[0] + 1] == "T":
+                                levels[current_level][pos[1]][pos[0] + 1] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] + 1, pos[1]]
+                            elif levels[current_level][pos[1]][pos[0] + 1] == "B" and levels[current_level][pos[1]][pos[0] + 2] == ".":
+                                levels[current_level][pos[1]][pos[0] + 1] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] + 1, pos[1]]
+                                levels[current_level][pos[1]][pos[0] + 1] = "B"
+                            elif levels[current_level][pos[1]][pos[0] + 1] == "B" and levels[current_level][pos[1]][pos[0] + 2] == "T":
+                                levels[current_level][pos[1]][pos[0] + 1] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] + 1, pos[1]]
+                                levels[current_level][pos[1]][pos[0] + 1] = "X"
+                            elif levels[current_level][pos[1]][pos[0] + 1] == "X" and levels[current_level][pos[1]][pos[0] + 2] == ".":
+                                levels[current_level][pos[1]][pos[0] + 1] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] + 1, pos[1]]
+                                levels[current_level][pos[1]][pos[0] + 1] = "B"
+                            elif levels[current_level][pos[1]][pos[0] + 1] == "X" and levels[current_level][pos[1]][pos[0] + 2] == "T":
+                                levels[current_level][pos[1]][pos[0] + 1] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] + 1, pos[1]]
+                                levels[current_level][pos[1]][pos[0] + 1] = "X"
+                    if ev.key == pg.K_LEFT:
+                        if pos[0] != 0:
+                            if levels[current_level][pos[1]][pos[0] - 1] == ".":
+                                levels[current_level][pos[1]][pos[0] - 1] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] - 1, pos[1]]
+                            elif levels[current_level][pos[1]][pos[0] - 1] == "T":
+                                levels[current_level][pos[1]][pos[0] - 1] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] - 1, pos[1]]
+                            elif levels[current_level][pos[1]][pos[0] - 1] == "B" and levels[current_level][pos[1]][pos[0] - 2] == ".":
+                                levels[current_level][pos[1]][pos[0] - 1] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] - 1, pos[1]]
+                                levels[current_level][pos[1]][pos[0] - 1] = "B"
+                            elif levels[current_level][pos[1]][pos[0] - 1] == "B" and levels[current_level][pos[1]][pos[0] - 2] == "T":
+                                levels[current_level][pos[1]][pos[0] - 1] = "P"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] - 1, pos[1]]
+                                levels[current_level][pos[1]][pos[0] - 1] = "X"
+                            elif levels[current_level][pos[1]][pos[0] - 1] == "X" and levels[current_level][pos[1]][pos[0] - 2] == ".":
+                                levels[current_level][pos[1]][pos[0] - 1] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] - 1, pos[1]]
+                                levels[current_level][pos[1]][pos[0] - 1] = "B"
+                            elif levels[current_level][pos[1]][pos[0] - 1] == "X" and levels[current_level][pos[1]][pos[0] - 2] == "T":
+                                levels[current_level][pos[1]][pos[0] - 1] = "o"
+                                if levels[current_level][pos[1]][pos[0]] == "P":
+                                    levels[current_level][pos[1]][pos[0]] = "."
+                                else:
+                                    levels[current_level][pos[1]][pos[0]] = "T"
+                                pos = [pos[0] - 1, pos[1]]
+                                levels[current_level][pos[1]][pos[0] - 1] = "X"
+                    if ev.key == pg.K_r:
+                        levels[current_level] = copy.deepcopy(init_lvls[current_level])
+                        for x in range(side):
+                            for y in range(side):
+                                if levels[current_level][x][y] == "P":
+                                    pos = [y, x]
+            except Exception:
+                pass
 
     pg.display.flip()
     clock.tick(50)
