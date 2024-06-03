@@ -28,7 +28,7 @@ icon = pg.image.load("pic/wall.png")
 
 # Screen
 scr = pg.display.set_mode((8*64, 8*64))
-pg.display.set_caption("PushBoxPush")
+pg.display.set_caption("Sokoban Pushbox")
 pg.display.set_icon(icon)
 
 # Images
