@@ -134,6 +134,22 @@ while True:
                                 levels[current_level][pos[1]][pos[0]] = "T"
                             pos = [pos[0], pos[1] - 1]
                             levels[current_level][pos[1] - 1][pos[0]] = "X"
+                        elif levels[current_level][pos[1] - 1][pos[0]] == "X" and levels[current_level][pos[1] - 2][pos[0]] == ".":
+                            levels[current_level][pos[1] - 1][pos[0]] = "o"
+                            if levels[current_level][pos[1]][pos[0]] == "P":
+                                levels[current_level][pos[1]][pos[0]] = "."
+                            else:
+                                levels[current_level][pos[1]][pos[0]] = "T"
+                            pos = [pos[0], pos[1] - 1]
+                            levels[current_level][pos[1] - 1][pos[0]] = "B"
+                        elif levels[current_level][pos[1] - 1][pos[0]] == "X" and levels[current_level][pos[1] - 2][pos[0]] == "T":
+                            levels[current_level][pos[1] - 1][pos[0]] = "o"
+                            if levels[current_level][pos[1]][pos[0]] == "P":
+                                levels[current_level][pos[1]][pos[0]] = "."
+                            else:
+                                levels[current_level][pos[1]][pos[0]] = "T"
+                            pos = [pos[0], pos[1] - 1]
+                            levels[current_level][pos[1] - 1][pos[0]] = "X"
                 if ev.key == pg.K_DOWN:
                     if pos[1] != side-1:
                         if levels[current_level][pos[1] + 1][pos[0]] == ".":
@@ -160,6 +176,22 @@ while True:
                             levels[current_level][pos[1] + 1][pos[0]] = "B"
                         elif levels[current_level][pos[1] + 1][pos[0]] == "B" and levels[current_level][pos[1] + 2][pos[0]] == "T":
                             levels[current_level][pos[1] + 1][pos[0]] = "P"
+                            if levels[current_level][pos[1]][pos[0]] == "P":
+                                levels[current_level][pos[1]][pos[0]] = "."
+                            else:
+                                levels[current_level][pos[1]][pos[0]] = "T"
+                            pos = [pos[0], pos[1] + 1]
+                            levels[current_level][pos[1] + 1][pos[0]] = "X"
+                        elif levels[current_level][pos[1] + 1][pos[0]] == "X" and levels[current_level][pos[1] + 2][pos[0]] == ".":
+                            levels[current_level][pos[1] + 1][pos[0]] = "o"
+                            if levels[current_level][pos[1]][pos[0]] == "P":
+                                levels[current_level][pos[1]][pos[0]] = "."
+                            else:
+                                levels[current_level][pos[1]][pos[0]] = "T"
+                            pos = [pos[0], pos[1] + 1]
+                            levels[current_level][pos[1] + 1][pos[0]] = "B"
+                        elif levels[current_level][pos[1] + 1][pos[0]] == "X" and levels[current_level][pos[1] + 2][pos[0]] == "T":
+                            levels[current_level][pos[1] + 1][pos[0]] = "o"
                             if levels[current_level][pos[1]][pos[0]] == "P":
                                 levels[current_level][pos[1]][pos[0]] = "."
                             else:
@@ -198,6 +230,22 @@ while True:
                                 levels[current_level][pos[1]][pos[0]] = "T"
                             pos = [pos[0] + 1, pos[1]]
                             levels[current_level][pos[1]][pos[0] + 1] = "X"
+                        elif levels[current_level][pos[1]][pos[0] + 1] == "X" and levels[current_level][pos[1]][pos[0] + 2] == ".":
+                            levels[current_level][pos[1]][pos[0] + 1] = "o"
+                            if levels[current_level][pos[1]][pos[0]] == "P":
+                                levels[current_level][pos[1]][pos[0]] = "."
+                            else:
+                                levels[current_level][pos[1]][pos[0]] = "T"
+                            pos = [pos[0] + 1, pos[1]]
+                            levels[current_level][pos[1]][pos[0] + 1] = "B"
+                        elif levels[current_level][pos[1]][pos[0] + 1] == "X" and levels[current_level][pos[1]][pos[0] + 2] == "T":
+                            levels[current_level][pos[1]][pos[0] + 1] = "o"
+                            if levels[current_level][pos[1]][pos[0]] == "P":
+                                levels[current_level][pos[1]][pos[0]] = "."
+                            else:
+                                levels[current_level][pos[1]][pos[0]] = "T"
+                            pos = [pos[0] + 1, pos[1]]
+                            levels[current_level][pos[1]][pos[0] + 1] = "X"
                 if ev.key == pg.K_LEFT:
                     if pos[0] != 0:
                         if levels[current_level][pos[1]][pos[0] - 1] == ".":
@@ -224,6 +272,22 @@ while True:
                             levels[current_level][pos[1]][pos[0] - 1] = "B"
                         elif levels[current_level][pos[1]][pos[0] - 1] == "B" and levels[current_level][pos[1]][pos[0] - 2] == "T":
                             levels[current_level][pos[1]][pos[0] - 1] = "P"
+                            if levels[current_level][pos[1]][pos[0]] == "P":
+                                levels[current_level][pos[1]][pos[0]] = "."
+                            else:
+                                levels[current_level][pos[1]][pos[0]] = "T"
+                            pos = [pos[0] - 1, pos[1]]
+                            levels[current_level][pos[1]][pos[0] - 1] = "X"
+                        elif levels[current_level][pos[1]][pos[0] - 1] == "X" and levels[current_level][pos[1]][pos[0] - 2] == ".":
+                            levels[current_level][pos[1]][pos[0] - 1] = "o"
+                            if levels[current_level][pos[1]][pos[0]] == "P":
+                                levels[current_level][pos[1]][pos[0]] = "."
+                            else:
+                                levels[current_level][pos[1]][pos[0]] = "T"
+                            pos = [pos[0] - 1, pos[1]]
+                            levels[current_level][pos[1]][pos[0] - 1] = "B"
+                        elif levels[current_level][pos[1]][pos[0] - 1] == "X" and levels[current_level][pos[1]][pos[0] - 2] == "T":
+                            levels[current_level][pos[1]][pos[0] - 1] = "o"
                             if levels[current_level][pos[1]][pos[0]] == "P":
                                 levels[current_level][pos[1]][pos[0]] = "."
                             else:
