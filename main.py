@@ -54,15 +54,15 @@ for x in range(8):
 while True:
     for x in range(side):
         for y in range(side):
-            if levels[current_level][x][y] == "#":
+            if levels[current_level][y][x] == "#":
                 scr.blit(wall_sprite, (x*64, y*64))
-            elif levels[current_level][x][y] == "P":
+            elif levels[current_level][y][x] == "P":
                 scr.blit(player_sprite, (x*64, y*64))
-            elif levels[current_level][x][y] == "B":
+            elif levels[current_level][y][x] == "B":
                 scr.blit(box_sprite, (x*64, y*64))
-            elif levels[current_level][x][y] == "T":
+            elif levels[current_level][y][x] == "T":
                 scr.blit(target_sprite, (x*64, y*64))
-            elif levels[current_level][x][y] == "X":
+            elif levels[current_level][y][x] == "X":
                 scr.blit(box_on_target_sprite, (x*64, y*64))
     for ev in pg.event.get():
         if ev.type == pg.QUIT:
